@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Exercício 3 - Produtos</title>
+
+<script src="js/ValidacaoMarca.js"></script>
+<script src="js/ValidacaoPreco.js"></script>
+<script src="js/ValidacaoQuantidade.js"></script>
+<script src="js/ValidacaoNome.js"></script>
+<link rel="stylesheet" href="css/Meucss.css">
+
+</head>
+<body>
+	<form name="Produtos">
+		<h1>PRODUTOS</h1><br>
+		
+		<a href="Menu.html"><label>Menu</label></a><br>
+		
+		<p><strong>Exercício 3 - PWEB</strong></p><br>
+		
+		<label>Nome do Produto:</label><br>
+		<input type="text" name="NomeProd" onblur="ValidacaoNome(Produtos.NomeProd)" maxlength="60" size='65'>
+  		<div id="msgnome"></div><br>
+  		
+  		<label>Marca:</label><br>
+		<input type="text" name="Marca" onblur="ValidacaoMarca(Produtos.Marca)">
+		<div id="msgmarca"></div><br>
+		
+		<label>Tipos de Unidade:</label><br>
+		<select name="TipoUnidade">
+    		<option value="KG">KG</option>
+		    <option value="CX">CX</option>
+		    <option value="PCT">PCT</option>
+		    <option value="UND">UND</option>
+  		</select><br><br>
+		
+		<label>Quantidade:</label><br>
+		<input type="text" name="Quantidade" onblur="ValidacaoQuantidade(Produtos.Quantidade)">
+		<div id="msgqtd"></div><br>
+		
+		<label>Preço:</label><br>
+		<input type="text" name="Preco" onblur="ValidacaoPreco(Produtos.Preco)">
+		<div id="msgpreco"></div><br>
+		
+		<input type="submit" value="Enviar">
+		
+	</form>
+</body>
+</html>

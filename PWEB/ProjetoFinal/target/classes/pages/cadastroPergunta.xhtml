@@ -1,0 +1,163 @@
+<ui:composition template="templateMenu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui2="http://java.sun.com/jsf/facelets"
+	xmlns:tm="http://java.sun.com/jsf/composite/terminal/1_0/components">
+	
+	<ui:define name="title">
+		<h:outputText value="#{msg['pages.cadastroPergunta.title']}" />
+	</ui:define>
+	
+
+	<ui:define name="principal">
+	
+	
+    <h1><p:outputLabel value="#{msg['pages.cadastroPergunta.menu']}"/></h1>
+    
+ 	<h:form id="formFornecedores">
+		<p:panelGrid columns="2">
+			<p:outputLabel value="#{msg['pages.cadastroPergunta.nome']}" />
+			<p:inputTextarea rows="5" cols="45" value="#{perguntaManagedBean.pergunta.enunciado}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroPergunta.resposta']}" />
+			<p:inputTextarea rows="5" cols="45" value="#{perguntaManagedBean.pergunta.resposta}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroPergunta.nivel']}" />
+			<p:inputNumber  value="#{perguntaManagedBean.pergunta.dificuldade}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroPergunta.tempo']}" />
+			<p:inputNumber  value="#{perguntaManagedBean.pergunta.tempoMinuto}"/>
+			
+			<p:outputLabel for="dataCriação" value="#{msg['pages.cadastroPergunta.data']}" />
+        	<p:calendar id="dataCriação" value="#{perguntaManagedBean.pergunta.dataCriacao}" pattern="dd-MM-yyyy" mask="true" />
+			
+			<p:outputLabel value="#{msg['pages.cadastroPergunta.conteudo']}" />
+			<p:selectOneMenu value="#{perguntaManagedBean.conteudo}"
+				converter="converterConteudo">
+				<f:selectItem itemValue="" itemLabel="#{msg['pages.cadastroPergunta.selecioneconteudo']}" />
+				<f:selectItems value="#{perguntaManagedBean.conteudos}" var="aux"
+					itemValue="#{aux}" itemLabel="#{aux.nome}" />
+			</p:selectOneMenu>
+			
+		</p:panelGrid>
+		<p:commandButton value="#{msg['pages.cadastroPergunta.btnSalvar']}" update=":formFornecedores, :formTableFornecedores"  action="#{perguntaManagedBean.salvar}"/>
+	</h:form>
+
+    
+    <h3><p:outputLabel value="#{msg['pages.cadastroPergunta.subtitle']}"/></h3>
+	<h:form id="formTableFornecedores">
+	
+	    <p:growl id="growl" showDetail="true" />
+	
+		<p:dataTable value="#{perguntaManagedBean.perguntas}" var="f"
+			editable="true" id="tableProdutos"
+
+			paginator="true"
+            rows="5"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15"
+                
+            emptyMessage="#{msg['pages.cadastroPergunta.filterMSG']}"
+			>
+			
+			 <p:ajax event="rowEdit" listener="#{perguntaManagedBean.onRowEdit}" update="tableProdutos"/>
+
+			<p:column headerText="#{msg['pages.cadastroPergunta.id']}" filterBy="#{f.id}">
+				<h:outputText value="#{f.id}" />
+			</p:column>
+
+			<p:column headerText="#{msg['pages.cadastroPergunta.nome']}" filterBy="#{f.enunciado}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.enunciado}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputTextarea rows="5" cols="45" id="enunciado" value="#{f.enunciado}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.resposta']}" filterBy="#{f.resposta}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.resposta}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputTextarea rows="5" cols="45" id="resposta" value="#{f.resposta}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.nivel']}" filterBy="#{f.dificuldade}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.dificuldade}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber id="dificuldade" value="#{f.dificuldade}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.tempo']}" filterBy="#{f.tempoMinuto}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.tempoMinuto}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber id="tempo" value="#{f.tempoMinuto}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.data']}" filterBy="#{f.dataCriacao}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{f.dataCriacao}">
+                			<f:convertDateTime pattern="dd/MM/yyyy" />
+            			</h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:calendar id="dataCriação" value="#{f.dataCriacao}" pattern="dd-MM-yyyy" mask="true" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.conteudo']}" filterBy="#{f.conteudo.nome}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.conteudo.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{f.conteudo}"
+							converter="converterConteudo" style="width:100%">
+							<f:selectItem itemValue="" itemLabel="#{msg['pages.cadastroPergunta.selecioneconteudo']}" />
+							<f:selectItems value="#{perguntaManagedBean.conteudos}"
+								var="aux" itemValue="#{aux}" itemLabel="#{aux.nome}" />
+						</p:selectOneMenu>
+
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:70px" headerText="#{msg['pages.cadastroPergunta.opcoes']}">
+					<p:rowEditor />
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{perguntaManagedBean.remove(f)}"
+						update=":formTableFornecedores" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+
+	<h1>Cadastro de Cidades</h1>
+	<h:form id="formCidade">
+		<p:panelGrid columns="2">
+		
+			<p:outputLabel value="Nome:" />
+			<p:inputText size="40" value="#{cidadeMB.cidade.nome}" />
+			
+			<p:outputLabel value="Quantidade Populacional:" />
+			<p:inputText size="40" value="#{cidadeMB.cidade.qtdPopulacional}" />
+        	
+        	<p:outputLabel value="Estado:" />
+        	<p:inputText size="40" value="#{cidadeMB.cidade.estado}" />
+        	
+        	<p:outputLabel value="País" />
+        	<p:inputText size="40" value="#{cidadeMB.cidade.pais}" />
+		</p:panelGrid>
+		<br></br>
+		<p:commandButton value="Salvar" action="#{cidadeMB.salvar()}" update=":formCidade,:formTabCidade" />
+	</h:form>
+	<br></br>
+	
+	<h:form id="formTabCidade">
+		<p:dataTable var="cid" value="#{cidadeMB.listaCidade}" id="tabCidade" editable="true">
+			<p:ajax event="rowEdit" listener="#{cidadeMB.onRowEdit}" update=":formTabCidade:tabCidade" />
+			
+			<p:column headerText="Nome">
+				<p:outputLabel value="#{cid.nome}" />
+			</p:column>
+			
+			<p:column headerText="Quantidade Populacional">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{cid.qtdPopulacional}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="qtdPopCidade" value="#{cid.qtdPopulacional}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Estado">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{cid.estado}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="estadoCidade" value="#{cid.estado}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="País">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{cid.pais}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="paisCidade" value="#{cid.pais}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column style="width:70px" headerText="Opções">
+				<p:rowEditor />
+				<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash" style="text-align:center" actionListener="#{cidadeMB.remover(cid)}" update=":formTabCidade" />
+			</p:column>
+			
+		</p:dataTable>
+	</h:form>
+
+</h:body>
+</html>

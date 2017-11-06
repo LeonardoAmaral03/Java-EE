@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+	
+	<h1>Cadastro de Times</h1>
+	<h:form id="formTime">
+		<p:panelGrid columns="2">
+		
+			<p:outputLabel value="Nome:" />
+			<p:inputText size="40" value="#{timeMB.time.nome}" />
+			
+			<p:outputLabel value="Estádio:" />
+			<p:inputText size="40" value="#{timeMB.time.estadio}" />
+        	
+        	<p:outputLabel value="Número de Jogadores:" />
+        	<p:inputNumber size="40" value="#{timeMB.time.numJogadores}" />
+        	
+        	<p:outputLabel value="Divisão" />
+        	<p:selectOneRadio id="divisao" value="#{timeMB.time.divisao}">
+            	<f:selectItem itemLabel="1ª" itemValue="1ª" />
+            	<f:selectItem itemLabel="2ª" itemValue="2ª" />
+            	<f:selectItem itemLabel="3ª" itemValue="3ª" />
+        	</p:selectOneRadio>
+        	
+        	<p:outputLabel value="Campeonato" />
+        	<p:selectOneMenu id="tpUnidadeProduto" value="#{timeMB.time.campeonato}" style="width:90%">
+				<f:selectItem itemLabel="Brasileiro" itemValue="Brasileiro" />
+			    <f:selectItem itemLabel="Paulista" itemValue="Paulista" />
+			    <f:selectItem itemLabel="Libertadores" itemValue="Libertadores" />
+				<f:selectItem itemLabel="Mundial" itemValue="Mundial" />
+			</p:selectOneMenu>
+        	
+		</p:panelGrid>
+		<br></br>
+		<p:commandButton value="Salvar" action="#{timeMB.salvar()}" update=":formTime,:formTabTime" />
+	</h:form>
+	<br></br>
+	
+	<h:form id="formTabTime">
+		<p:dataTable var="time" value="#{timeMB.listaTime}" id="tabTime">
+			
+			<p:column headerText="Nome">
+				<p:outputLabel value="#{time.nome}" />
+			</p:column>
+			
+			<p:column headerText="Estadio">
+				<p:outputLabel value="#{time.estadio}" />
+			</p:column>
+			
+			<p:column headerText="Número de Jogadores">
+				<p:outputLabel value="#{time.numJogadores}" />
+			</p:column>
+			
+			<p:column headerText="Divisão">
+				<p:outputLabel value="#{time.divisao}" />
+			</p:column>
+			
+			<p:column headerText="Campeonato">
+				<p:outputLabel value="#{time.campeonato}" />
+			</p:column>
+			
+		</p:dataTable>
+	</h:form>
+	
+</h:body>
+</html>

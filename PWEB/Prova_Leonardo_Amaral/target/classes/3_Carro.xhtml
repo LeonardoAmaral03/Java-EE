@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+	
+	<h1>Cadastro de Carros</h1>
+	<h:form id="formCarro">
+		<p:panelGrid columns="2">
+		
+			<p:outputLabel value="Marca: " />
+			<p:inputText size="30" value="#{carroMB.carro.marca}" />
+			
+			<p:outputLabel value="Modelo: " />
+			<p:inputText size="30" value="#{carroMB.carro.modelo}" />
+			
+			<p:outputLabel value="Tipo de Cobustível:" />
+        	<p:selectOneRadio id="tpCombustivel" value="#{carroMB.carro.tpCombustivel}">
+            	<f:selectItem itemLabel="Gasolina" itemValue="Gasolina" />
+            	<f:selectItem itemLabel="Etanol" itemValue="Etanol" />
+            	<f:selectItem itemLabel="Diesel" itemValue="Diesel" />
+            	<f:selectItem itemLabel="GNV" itemValue="GNV" />
+        	</p:selectOneRadio>
+        	
+        	<p:outputLabel value="Cor: " />
+			<p:inputText size="30" value="#{carroMB.carro.cor}" />
+			
+		</p:panelGrid>
+		<p:commandButton value="Salvar" action="#{carroMB.salvar()}" update=":formCarro,:formTabCarro" />
+
+	</h:form>
+	
+	<h:form id="formTabCarro">
+		<p:dataTable var="car" value="#{carroMB.listaCarro}" id="tabCarro" editable="true">
+			<p:column headerText="Marca">
+				<p:outputLabel value="#{car.marca}" />
+			</p:column>
+			<p:column headerText="Modelo">
+				<p:outputLabel value="#{car.modelo}" />
+			</p:column>
+			<p:column headerText="Tipo de Combustível">
+				<p:outputLabel value="#{car.tpCombustivel}" />
+			</p:column>
+			<p:column headerText="Cor">
+				<p:outputLabel value="#{car.cor}" />
+			</p:column>
+			<p:column style="width:70px" headerText="Opções">
+				<p:rowEditor />
+				<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash" style="text-align:center" actionListener="#{carroMB.remover(car)}" update=":formTabCarro" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	
+</h:body>
+</html>

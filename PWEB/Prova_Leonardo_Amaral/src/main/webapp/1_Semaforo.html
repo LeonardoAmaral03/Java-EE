@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	var i = 1;
+	function troca(){
+		if(i == 1)
+			document.getElementById("semafaro").src = "amarelo.jpg";
+		else
+			if(i == 2)
+				document.getElementById("semafaro").src = "verde.jpg";
+			else{
+				document.getElementById("semafaro").src = "vermelho.jpg";
+				i=0;
+			}
+		i++;				
+	}
+</script>
+
+</head>
+<body>
+	
+	<img id="semafaro" src="vermelho.jpg">
+	
+	<button type="button" onclick="troca()">Mudar Cor</button>
+	
+</body>
+</html>

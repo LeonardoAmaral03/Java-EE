@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+	
+	<h1>Itens de Compra</h1>
+	<h:form id="formProduto">
+		<p:panelGrid columns="2">
+		
+			<p:outputLabel value="Descrição: " />
+			<p:inputText size="30" value="#{produtoMB.produto.descricao}" />
+			
+			<p:outputLabel value="Valor Unitário: " />
+			<p:inputText size="30" value="#{produtoMB.produto.valUnitario}" />
+        	
+        	<p:outputLabel value="Quantidade: " />
+			<p:inputText size="30" value="#{produtoMB.produto.quantidade}" />
+			
+			<p:outputLabel value="Valor Total da Venda:" />
+			<p:outputLabel value="#{produtoMB.valTotVenda}" />
+			
+		</p:panelGrid>
+		<br />
+		<p:commandButton value="Salvar" action="#{produtoMB.salvar()}" update=":formProduto,:formTabProduto" />
+		<p:commandButton value="Limpar" action="#{produtoMB.limpar()}" update=":formProduto,:formTabProduto" />
+	</h:form>
+		<br />
+	<h:form id="formTabProduto">
+		<p:dataTable var="prod" value="#{produtoMB.listaProd}" id="tabProduto">
+			<p:column headerText="Descrição">
+				<p:outputLabel value="#{prod.descricao}" />
+			</p:column>
+			<p:column headerText="Valor Unitário">
+				<p:outputLabel value="#{prod.valUnitario}" />
+			</p:column>
+			<p:column headerText="Quantidade">
+				<p:outputLabel value="#{prod.quantidade}" />
+			</p:column>
+			<p:column headerText="Valor Total do Produto">
+				<p:outputLabel value="#{prod.valTotItem}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	
+</h:body>
+</html>

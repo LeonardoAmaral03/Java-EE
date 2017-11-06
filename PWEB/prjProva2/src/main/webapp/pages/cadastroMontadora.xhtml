@@ -1,0 +1,157 @@
+
+<ui:composition template="templateMenu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui2="http://java.sun.com/jsf/facelets"
+	xmlns:tm="http://java.sun.com/jsf/composite/terminal/1_0/components">
+	
+	<ui:define name="title">
+		<h:outputText value="Gerencial->Cadastro Montadora" />
+	</ui:define>
+	
+
+	<ui:define name="principal">
+	  
+	  <h1><p:outputLabel value="Cadastro Montadora"/></h1>
+	  
+	  <h:form id="formAluno">	
+	  <p:panelGrid columns="2">
+      <p:outputLabel value="Nome" />
+      <p:inputText value="#{montadoraMB.montadora.nome}"/>
+      <p:outputLabel value="Endereco" />
+      <p:inputText value="#{montadoraMB.montadora.endereco}"/>
+      <p:outputLabel value="Telefone" />
+      <p:inputText value="#{montadoraMB.montadora.telefone}"/>
+	  </p:panelGrid>
+	  <p:commandButton value="Salvar" 
+	                 action="#{montadoraMB.salvar}"
+	                 update=":formAluno, :formTableAluno:tabelaAluno"
+	                 />
+       </h:form>
+
+   <br/>
+   
+   
+   <h3><p:outputLabel value="Montadoras cadastradas" /> </h3>
+   <h:form id="formTableAluno">
+   
+   <p:growl id="growl" showDetail="true" />
+   
+    <p:dataTable
+                value="#{montadoraMB.montadoras}"
+                var="aux"
+                id="tabelaAluno"
+            
+                editable="true"
+                
+                selectionMode="single" selection="#{montadoraMB.montadoraSelecionada}"  rowKey="#{aux.codigo}"
+            
+                paginator="true"
+                rows="5"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15"
+                
+                emptyMessage="#{msg['pages.cadastroAluno.filterMSG']}"
+                
+   >
+      <p:ajax event="rowSelect"   update=":formTableProdutos" />
+      <p:ajax event="rowUnselect" update=":formTableProdutos" />
+      <p:ajax event="rowEdit" listener="#{montadoraMB.onRowEdit}" update="tabelaAluno" />
+      
+      <p:column headerText="Codigo" filterBy="#{aux.codigo}">
+        <h:outputText value="#{aux.codigo}" />
+      </p:column>
+      
+      
+      
+      <p:column headerText="#{msg['pages.cadastroAluno.nome']}" filterBy="#{aux.nome}">
+    
+    			<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{aux.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="alunoNome" value="#{aux.nome}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+	  </p:column>
+    
+      <p:column headerText="Endereco" filterBy="#{aux.endereco}">
+     
+     			<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{aux.endereco}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="alunoCurso" value="#{aux.endereco}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+      </p:column>
+      
+      <p:column headerText="Telefone" filterBy="#{aux.telefone}">
+     
+     			<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{aux.telefone}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="alunoCurso22" value="#{aux.telefone}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+      </p:column>
+      
+      <p:column style="width:70px" headerText="#{msg['pages.cadastroAluno.optionTable']}">
+					
+					<p:rowEditor />
+					
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{montadoraMB.remove(aux)}"
+						update="tabelaAluno" />
+	  </p:column>
+
+      
+      
+   </p:dataTable>	
+
+	</h:form>
+	
+	<br/>
+    <h:form id="formTableProdutos">
+	    <h3><p:outputLabel value="Carros da Montadora: #{montadoraMB.montadoraSelecionada.nome}" /></h3>
+		<p:dataTable value="#{montadoraMB.carrosMontadora}" var="prod"	id="tableProdutos">
+
+			<p:column headerText="Codigo">
+				<h:outputText value="#{prod.codigo}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+						<p:outputLabel value="#{prod.nome}" />
+			</p:column>
+			
+			<p:column headerText="Marca">
+						<p:outputLabel value="#{prod.marca}" />
+			</p:column>
+
+			<p:column headerText="Valor">
+				<h:outputText value="#{prod.valor}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	
+   	   
+	</ui:define>
+</ui:composition>
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<p:panelMenu>
+		    <p:submenu label="Inicio" >
+			   <p:menuitem value="Inicio" url="inicio.xhtml" />
+			</p:submenu>
+		
+			<p:submenu label="Gerencial">
+				<p:menuitem value="Cadastro Locadora"      url="cadastroLocadora.xhtml" />
+				<p:menuitem value="Cadastro Carros" url="cadastroCarro.xhtml" />
+				<p:menuitem value="Cadastro Montadora" url="cadastroMontadora.xhtml" />
+	       </p:submenu>
+					
+			<p:submenu label="Opções">
+				<p:menuitem value="Linguagem" url="linguagem.xhtml" />
+	       </p:submenu>
+		
+		</p:panelMenu>
+	</h:form>
+</ui:composition>
+

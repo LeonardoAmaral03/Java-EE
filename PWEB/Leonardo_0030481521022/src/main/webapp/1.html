@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	function mostraNumero(numero) {
+		var n = numero.value;
+		var t = n.length;
+		var c = "imagens/";
+		var f = ".png";
+				
+		document.getElementById("centena").src = "imagens/0.png";
+		document.getElementById("dezena").src = "imagens/0.png";
+		
+		if (t == 1)
+			document.getElementById("unidade").src = c + n.charAt(0) + f;
+		else if (t == 2) {
+			document.getElementById("dezena").src = c + n.charAt(0) + f;
+			document.getElementById("unidade").src = c + n.charAt(1) + f;
+		} else {
+			document.getElementById("centena").src = c + n.charAt(0) + f;
+			document.getElementById("dezena").src = c + n.charAt(1) + f;
+			document.getElementById("unidade").src = c + n.charAt(2) + f;
+		}
+	}
+</script>
+
+</head>
+<body>
+
+	Digite um número:<br>
+	<input type="text" name="numero">
+	
+	<button type="button" onclick="mostraNumero(numero)">Mostrar Número</button>
+	<br><br>
+	
+	<img id="centena" style="width: 100px; height: 100px;">
+	<img id="dezena" style="width: 100px; height: 100px;">
+	<img id="unidade" style="width: 100px; height: 100px;">
+
+</body>
+</html>

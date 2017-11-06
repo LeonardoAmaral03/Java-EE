@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+
+	<h1>Cadastro de Produtos</h1>
+	<h:form id="formProduto">
+		<p:panelGrid columns="2">
+			<p:outputLabel value="Código:" />
+			<p:inputText size="40" value="#{produtoMB.produto.codigo}" />
+		
+			<p:outputLabel value="Nome:" />
+			<p:inputText size="40" value="#{produtoMB.produto.nome}" />
+			
+			<p:outputLabel value="Descrição:" />
+			<p:inputTextarea rows="5" cols="45" value="#{produtoMB.produto.descricao}" />
+			
+			<p:outputLabel value="Tipo de Unidade:" />
+        	<p:selectOneRadio id="tpUnidade" value="#{produtoMB.produto.tpUnidade}">
+            	<f:selectItem itemLabel="KG" itemValue="KG" />
+            	<f:selectItem itemLabel="CX" itemValue="CX" />
+            	<f:selectItem itemLabel="UND" itemValue="UND" />
+            	<f:selectItem itemLabel="PCT" itemValue="PCT" />
+        	</p:selectOneRadio>
+        	
+        	<p:outputLabel value="Quantidade" />
+        	<p:inputText size="40" value="#{produtoMB.produto.quantidade}" />
+        	
+        	<p:outputLabel value="Preço" />
+        	<p:inputText size="40" value="#{produtoMB.produto.preco}" />
+		</p:panelGrid>
+		<br></br>
+		<p:commandButton value="Salvar" action="#{produtoMB.salvar()}" update="formProduto" />
+	</h:form>
+
+</h:body>
+</html>

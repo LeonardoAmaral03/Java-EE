@@ -1,0 +1,162 @@
+
+<ui:composition template="templateMenu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui2="http://java.sun.com/jsf/facelets"
+	xmlns:tm="http://java.sun.com/jsf/composite/terminal/1_0/components">
+	
+	<ui:define name="title">
+		<h:outputText value="Gerencial->Cadastro Carro" />
+	</ui:define>
+	
+	<ui:define name="principal">
+	
+	<h1><p:outputLabel value="Cadastro Carro" /> </h1>
+ 	<h:form id="formProdutos">
+
+		<p:panelGrid columns="2">
+			<p:outputLabel value="Nome" />
+			<p:inputText value="#{carroMB.carro.nome}" />
+
+			<p:outputLabel value="Locadora" />
+			<p:selectOneMenu value="#{carroMB.locadora}"
+				converter="converterLocadora">
+				<f:selectItem itemValue="" itemLabel="Selecione uma locadora" />
+				<f:selectItems value="#{carroMB.locadoras}" var="aux"
+					itemValue="#{aux}" itemLabel="#{aux.nome}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Montadora" />
+			<p:selectOneMenu value="#{carroMB.montadora}"
+				converter="converterMontadora">
+				<f:selectItem itemValue="" itemLabel="Selecione uma montadora" />
+				<f:selectItems value="#{carroMB.montadoras}" var="aux"
+					itemValue="#{aux}" itemLabel="#{aux.nome}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Marca" />
+			<p:inputText value="#{carroMB.carro.marca}" />
+
+			<p:outputLabel value="Valor" />
+			<p:inputText value="#{carroMB.carro.valor}" />
+
+
+		</p:panelGrid>
+		<p:commandButton value="Salvar" action="#{carroMB.salvar}"
+			update=":formProdutos, :formTableProdutos" />
+	</h:form>
+
+    <h3><p:outputLabel value="Carros cadastrados" /> </h3>
+    
+	<h:form id="formTableProdutos">
+	
+	
+	    
+		<p:dataTable value="#{carroMB.carros}" var="prod"
+			editable="true" id="tableProdutos"
+			paginator="true"
+            rows="5"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15"
+                
+            emptyMessage="#{msg['pages.cadastroAluno.filterMSG']}"
+            >
+
+            <p:ajax event="rowEdit" listener="#{carroMB.onRowEdit}" update="tableProdutos"/>
+
+			<p:column headerText="Codigo" filterBy="#{prod.codigo}">
+				<h:outputText value="#{prod.codigo}" />
+			</p:column>
+
+			<p:column headerText="Nome" filterBy="#{prod.nome}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="nome" value="#{prod.nome}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="Locadora" filterBy="#{prod.locadora.nome}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.locadora.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{prod.locadora}"
+							converter="converterLocadora" style="width:100%">
+							<f:selectItem itemValue="" itemLabel="Selecione uma locadora}" />
+							<f:selectItems value="#{carroMB.locadoras}"
+								var="aux" itemValue="#{aux}" itemLabel="#{aux.nome}" />
+						</p:selectOneMenu>
+
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Montadora" filterBy="#{prod.montadora.nome}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.montadora.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{prod.montadora}"
+							converter="converterMontadora" style="width:100%">
+							<f:selectItem itemValue="" itemLabel="Selecione uma montadora}" />
+							<f:selectItems value="#{carroMB.montadoras}"
+								var="aux" itemValue="#{aux}" itemLabel="#{aux.nome}" />
+						</p:selectOneMenu>
+
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Marca" filterBy="#{prod.marca}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.marca}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="marca" value="#{prod.marca}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Valor" filterBy="#{prod.valor}">
+				  <p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.valor}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="valor" value="#{prod.valor}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:70px" headerText="#{msg['pages.commus.form.opcoes']}">
+
+
+
+					<p:rowEditor />
+					
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{carroMB.remove(prod)}"
+						update=":formTableProdutos" />
+
+
+
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+	</ui:define>
+</ui:composition>

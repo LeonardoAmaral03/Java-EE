@@ -1,0 +1,161 @@
+
+<ui:composition template="templateMenu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui2="http://java.sun.com/jsf/facelets"
+	xmlns:tm="http://java.sun.com/jsf/composite/terminal/1_0/components">
+	
+	<ui:define name="title">
+		<h:outputText value="#{msg['pages.cadastroDisciplina.title']}" />
+	</ui:define>
+	
+
+	<ui:define name="principal">
+	
+	
+    <h1><p:outputLabel value="#{msg['pages.cadastroDisciplina.menu']}"/></h1>
+    
+ 	<h:form id="formFornecedores">
+		<p:panelGrid columns="2">
+			<p:outputLabel value="#{msg['pages.cadastroDisciplina.nome']}" />
+			<p:inputText  value="#{disciplinaManagedBean.disciplina.nome}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroDisciplina.faculdade']}" />
+			<p:inputText  value="#{disciplinaManagedBean.disciplina.faculdade}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroDisciplina.curso']}" />
+			<p:inputText  value="#{disciplinaManagedBean.disciplina.curso}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroDisciplina.cargahoraria']}" />
+			<p:inputNumber  value="#{disciplinaManagedBean.disciplina.cargaHoraria}"/>
+			
+		</p:panelGrid>
+		<p:commandButton value="#{msg['pages.cadastroDisciplina.btnSalvar']}" update=":formFornecedores, :formTableFornecedores"  action="#{disciplinaManagedBean.salvar}"/>
+	</h:form>
+
+    
+    <h3><p:outputLabel value="#{msg['pages.cadastroDisciplina.subtitle']}"/></h3>
+	<h:form id="formTableFornecedores">
+	
+	    <p:growl id="growl" showDetail="true" />
+	
+		<p:dataTable value="#{disciplinaManagedBean.disciplinas}" var="f"
+			editable="true" id="tableProdutos"
+			selectionMode="single" selection="#{disciplinaManagedBean.disciplinaSelecionada}"  rowKey="#{f.id}"
+			paginator="true"
+            rows="5"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15"
+                
+            emptyMessage="#{msg['pages.cadastroDisciplina.filterMSG']}"
+			>
+
+		   <p:ajax event="rowSelect"   update=":formTableProdutos" />
+           <p:ajax event="rowUnselect" update=":formTableProdutos" />
+           <p:ajax event="rowEdit"     listener="#{disciplinaManagedBean.onRowEdit}"     update=":formTableProdutos" /> 
+
+			<p:column headerText="#{msg['pages.cadastroDisciplina.id']}" filterBy="#{f.id}">
+				<h:outputText value="#{f.id}" />
+			</p:column>
+
+			<p:column headerText="#{msg['pages.cadastroDisciplina.nome']}" filterBy="#{f.nome}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="nome" value="#{f.nome}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroDisciplina.faculdade']}" filterBy="#{f.faculdade}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.faculdade}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="faculdade" value="#{f.faculdade}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroDisciplina.curso']}" filterBy="#{f.curso}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.curso}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="curso" value="#{f.curso}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroDisciplina.cargahoraria']}" filterBy="#{f.cargaHoraria}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.cargaHoraria}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber id="cargaHoraria" value="#{f.cargaHoraria}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:70px" headerText="#{msg['pages.cadastroDisciplina.opcoes']}">
+					<p:rowEditor />
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{disciplinaManagedBean.remove(f)}"
+						update=":formTableFornecedores" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+    <br/>
+    <h:form id="formTableProdutos">
+	    <h3><p:outputLabel value="#{msg['pages.cadastroDisciplina.gerarprova']}: #{disciplinaManagedBean.disciplinaSelecionada.nome}" /></h3>
+	    <h:commandLink>
+                <p:graphicImage name="/sistema/imagens/iconepdf.png" width="24"/>
+                <p:dataExporter type="pdf" encoding="iso-8859-1" target="tableProdutos" fileName="#{msg['pages.cadastroDisciplina.prova']}"/>
+        </h:commandLink>
+        <h:commandLink>
+                <p:graphicImage name="/sistema/imagens/iconeexcel.png" width="24"/>
+                <p:dataExporter type="xls" encoding="iso-8859-1" target="tableProdutos" fileName="#{msg['pages.cadastroDisciplina.prova']}"/>
+        </h:commandLink>
+		<p:dataTable value="#{disciplinaManagedBean.conteudosDisciplina}" var="prod" 
+		editable="true" id="tableProdutos"
+			rowKey="#{prod.id}"
+			paginator="true"
+            rows="5"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15"
+                
+            emptyMessage="#{msg['pages.cadastroDisciplina.filterMSG']}"
+		>
+
+			<p:column headerText="#{msg['pages.cadastroDisciplina.id']}" filterBy="#{prod.id}" exportable="false">
+				<h:outputText value="#{prod.id}" />
+			</p:column>
+
+			<p:column headerText="#{msg['pages.cadastroDisciplina.conteudodisciplina']}" filterBy="#{prod.nome}">
+						<p:outputLabel value="#{prod.nome}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroDisciplina.cargahoraria']}" filterBy="#{prod.cargaHoraria}">
+						<p:outputLabel value="#{prod.cargaHoraria}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+   <h:form id="formCalc"> 
+	<p:panelGrid columns="2">
+		<p:outputLabel value="Numero 1:" />
+		<p:inputText size="10" value="#{somaManagedBean.num1}" />
+		<p:outputLabel value="Numero 2:" />
+
+		<p:inputText size="10" value="#{somaManagedBean.num2}" />
+
+		<p:outputLabel value="Resultado" />
+		<p:outputLabel size="10" value="#{somaManagedBean.result}" />
+
+		<p:commandButton value="Somar" action="#{somaManagedBean.somar}" update=":formCalc"/>
+		<p:commandButton value="Subtrair" action="#{somaManagedBean.subtrair}" update=":formCalc"/>
+		<p:commandButton value="Multiplicar" action="#{somaManagedBean.multiplicar}" update=":formCalc"/>
+		<p:commandButton value="Dividir" action="#{somaManagedBean.dividir}" update=":formCalc"/>
+	</p:panelGrid>
+   </h:form>	
+</h:body>
+</html>
+

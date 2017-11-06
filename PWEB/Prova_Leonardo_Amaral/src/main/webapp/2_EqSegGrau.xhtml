@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+
+	<h1>Equação do Segundo Grau</h1>
+	<h:form id="formEqSegGrau">
+		<p:panelGrid columns="2">
+			<p:outputLabel value="A: "/>
+			<p:inputText size="20" value="#{eqSegGrauMB.eqSegGrau.a}"/>
+			
+			<p:outputLabel value="B: "/>
+			<p:inputText size="20" value="#{eqSegGrauMB.eqSegGrau.b}"/>
+			
+			<p:outputLabel value="C: "/>
+			<p:inputText size="20" value="#{eqSegGrauMB.eqSegGrau.c}"/>
+			
+			<p:outputLabel value="X1: "/>
+			<p:outputLabel size="20" value="#{eqSegGrauMB.eqSegGrau.x1}"/>
+		
+			<p:outputLabel value="X2: "/>
+			<p:outputLabel size="20" value="#{eqSegGrauMB.eqSegGrau.x2}"/>
+		
+		</p:panelGrid>
+		<br></br>
+		<p:commandButton value="Calcular" action="#{eqSegGrauMB.calcular}" update=":formEqSegGrau"/>
+	</h:form>
+
+</h:body>
+</html>

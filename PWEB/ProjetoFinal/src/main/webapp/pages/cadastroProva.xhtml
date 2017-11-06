@@ -1,0 +1,206 @@
+<ui:composition template="templateMenu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui2="http://java.sun.com/jsf/facelets"
+	xmlns:tm="http://java.sun.com/jsf/composite/terminal/1_0/components">
+	
+	<ui:define name="title">
+		<h:outputText value="#{msg['pages.cadastroProva.title']}" />
+	</ui:define>
+	
+
+	<ui:define name="principal">
+	
+	
+    <h1><p:outputLabel value="#{msg['pages.cadastroProva.menu']}"/></h1>
+    
+ 	<h:form id="formFornecedores">
+		<p:panelGrid columns="2">
+			<p:outputLabel value="#{msg['pages.cadastroProva.nome']}" />
+			<p:inputText  value="#{provaManagedBean.prova.nome}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroProva.nivel']}" />
+			<p:inputNumber  value="#{provaManagedBean.prova.dificuldade}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroProva.tempo']}" />
+			<p:inputNumber  value="#{provaManagedBean.prova.tempoMinuto}"/>
+			
+			<p:outputLabel value="#{msg['pages.cadastroProva.qtdeperguntas']}" />
+			<p:inputNumber  value="#{provaManagedBean.prova.qntPerguntas}"/>
+			
+			<p:outputLabel for="dataCriação" value="#{msg['pages.cadastroProva.data']}" />
+        	<p:calendar id="dataCriação" value="#{provaManagedBean.prova.dataCriacao}" pattern="dd-MM-yyyy" mask="true" />
+        	
+        	<p:outputLabel for="dataAplicação" value="#{msg['pages.cadastroProva.dataaplicacao']}" />
+        	<p:calendar id="dataAplicação" value="#{provaManagedBean.prova.dataAplic}" pattern="dd-MM-yyyy" mask="true" />
+			
+		</p:panelGrid>
+		<p:commandButton value="#{msg['pages.cadastroProva.btnSalvar']}" update=":formFornecedores, :formTableFornecedores"  action="#{provaManagedBean.salvar}"/>
+	</h:form>
+
+    
+    <h3><p:outputLabel value="#{msg['pages.cadastroProva.subtitle']}"/></h3>
+	<h:form id="formTableFornecedores">
+	
+	    <p:growl id="growl" showDetail="true" />
+	
+		<p:dataTable value="#{provaManagedBean.provas}" var="f"
+			editable="true" id="tableProdutos"
+			selectionMode="single" selection="#{provaManagedBean.provaSelecionada}"  rowKey="#{f.id}"
+			paginator="true"
+            rows="5"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15"
+                
+            emptyMessage="#{msg['pages.cadastroProva.filterMSG']}"
+			>
+
+		   <p:ajax event="rowSelect"   update=":formTableProdutos" />
+           <p:ajax event="rowUnselect" update=":formTableProdutos" />
+           <p:ajax event="rowEdit"     listener="#{provaManagedBean.onRowEdit}"     update=":formTableProdutos" /> 
+
+			<p:column headerText="#{msg['pages.cadastroProva.id']}" filterBy="#{f.id}">
+				<h:outputText value="#{f.id}" />
+			</p:column>
+
+			<p:column headerText="#{msg['pages.cadastroProva.nome']}" filterBy="#{f.nome}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="nome" value="#{f.nome}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroProva.nivel']}" filterBy="#{f.dificuldade}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.dificuldade}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber id="dificuldade" value="#{f.dificuldade}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroProva.tempo']}" filterBy="#{f.tempoMinuto}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.tempoMinuto}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber id="tempoMinuto" value="#{f.tempoMinuto}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroProva.qtdeperguntas']}" filterBy="#{f.qntPerguntas}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.qntPerguntas}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber id="qntPerguntas" value="#{f.qntPerguntas}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroProva.data']}" filterBy="#{f.dataCriacao}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{f.dataCriacao}">
+                			<f:convertDateTime pattern="dd/MM/yyyy" />
+            			</h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:calendar id="dataCriação" value="#{f.dataCriacao}" pattern="dd-MM-yyyy" mask="true" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroProva.dataaplicacao']}" filterBy="#{f.dataAplic}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{f.dataAplic}">
+                			<f:convertDateTime pattern="dd/MM/yyyy" />
+            			</h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:calendar id="dataAplic" value="#{f.dataAplic}" pattern="dd-MM-yyyy" mask="true" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:70px" headerText="#{msg['pages.cadastroProva.opcoes']}">
+					<p:rowEditor />
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{provaManagedBean.remove(f)}"
+						update=":formTableFornecedores" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+    <br/>
+    <h:form id="formTableProdutos">
+	    <h3><p:outputLabel value="#{msg['pages.cadastroProva.gerarprova']}: #{provaManagedBean.provaSelecionada.nome}" /></h3>
+	    <h:commandLink>
+                <p:graphicImage name="/sistema/imagens/iconepdf.png" width="24"/>
+                <p:dataExporter type="pdf" encoding="iso-8859-1" target="tableProdutos" fileName="#{msg['pages.cadastroProva.prova']}"/>
+        </h:commandLink>
+        <h:commandLink>
+                <p:graphicImage name="/sistema/imagens/iconeexcel.png" width="24"/>
+                <p:dataExporter type="xls" encoding="iso-8859-1" target="tableProdutos" fileName="#{msg['pages.cadastroProva.prova']}"/>
+        </h:commandLink>
+		<p:dataTable value="#{provaManagedBean.perguntasProva}" var="prod"
+		editable="true" id="tableProdutos"
+			rowKey="#{prod.id}"
+			paginator="true"
+            rows="5"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15"
+                
+            emptyMessage="#{msg['pages.cadastroProva.filterMSG']}"
+		>
+
+			<p:column headerText="#{msg['pages.cadastroPergunta.id']}" filterBy="#{prod.id}" exportable="false">
+				<h:outputText value="#{prod.id}" />
+			</p:column>
+
+			<p:column headerText="#{msg['pages.cadastroPergunta.nome']}" filterBy="#{prod.pergunta.enunciado}">
+						<p:outputLabel value="#{prod.pergunta.enunciado}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.resposta']}" filterBy="#{prod.pergunta.resposta}" exportable="false">
+						<p:outputLabel value="#{prod.pergunta.resposta}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.nivel']}" filterBy="#{prod.pergunta.dificuldade}" exportable="false">
+						<p:outputLabel value="#{prod.pergunta.dificuldade}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.tempo']}" filterBy="#{prod.pergunta.tempoMinuto}" exportable="false">
+						<p:outputLabel value="#{prod.pergunta.tempoMinuto}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['pages.cadastroPergunta.data']}" filterBy="#{prod.pergunta.dataCriacao}" exportable="false">
+						<h:outputText value="#{prod.pergunta.dataCriacao}">
+                			<f:convertDateTime pattern="dd/MM/yyyy" />
+            			</h:outputText>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+
+	<h1>Cadastro de Produtos</h1>
+	<h:form id="formProduto">
+		<p:panelGrid columns="2">
+		
+			<p:outputLabel value="Nome:" />
+			<p:inputText size="40" value="#{produtoMB.produto.nome}" />
+			
+			<p:outputLabel value="Descrição:" />
+			<p:inputTextarea rows="5" cols="45" value="#{produtoMB.produto.descricao}" />
+			
+			<p:outputLabel value="Tipo de Unidade:" />
+        	<p:selectOneRadio id="tpUnidade" value="#{produtoMB.produto.tpUnidade}">
+            	<f:selectItem itemLabel="KG" itemValue="KG" />
+            	<f:selectItem itemLabel="CX" itemValue="CX" />
+            	<f:selectItem itemLabel="UND" itemValue="UND" />
+            	<f:selectItem itemLabel="PCT" itemValue="PCT" />
+        	</p:selectOneRadio>
+        	
+        	<p:outputLabel value="Quantidade" />
+        	<p:inputText size="40" value="#{produtoMB.produto.quantidade}" />
+        	
+        	<p:outputLabel value="Preço" />
+        	<p:inputText size="40" value="#{produtoMB.produto.preco}" />
+		</p:panelGrid>
+		<br></br>
+		<p:commandButton value="Salvar" action="#{produtoMB.salvar()}" update=":formProduto,:formTabProduto" />
+	</h:form>
+	<br></br>
+	
+	<h:form id="formTabProduto">
+		<p:dataTable var="prod" value="#{produtoMB.listaProd}" id="tabProduto" editable="true">
+			<p:ajax event="rowEdit" listener="#{produtoMB.onRowEdit}" update=":formTabProduto:tabProduto" />
+			
+			<p:column headerText="Código">
+				<p:outputLabel value="#{prod.codigo}" />
+			</p:column>
+			
+			<p:column headerText="Nome">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="nomeProduto" value="#{prod.nome}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Descrição">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.descricao}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputTextarea rows="3" cols="30" id="descricaoProduto" value="#{prod.descricao}" style="width:100%"/>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Tipo de Unidade">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.tpUnidade}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu id="tpUnidadeProduto" value="#{prod.tpUnidade}" style="width:100%">
+				            <f:selectItem itemLabel="KG" itemValue="KG" />
+			            	<f:selectItem itemLabel="CX" itemValue="CX" />
+			            	<f:selectItem itemLabel="UND" itemValue="UND" />
+			            	<f:selectItem itemLabel="PCT" itemValue="PCT" />
+				        </p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Quantidade">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.quantidade}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="quantidadeProduto" value="#{prod.quantidade}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Preço">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{prod.preco}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="precoProduto" value="#{prod.preco}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column style="width:70px" headerText="Opções">
+				<p:rowEditor />
+				<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash" style="text-align:center" actionListener="#{produtoMB.remover(prod)}" update=":formTabProduto" />
+			</p:column>
+			
+		</p:dataTable>
+	</h:form>
+
+</h:body>
+</html>

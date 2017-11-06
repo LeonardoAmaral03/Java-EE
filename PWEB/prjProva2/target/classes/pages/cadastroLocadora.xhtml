@@ -1,0 +1,132 @@
+
+<ui:composition template="templateMenu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui2="http://java.sun.com/jsf/facelets"
+	xmlns:tm="http://java.sun.com/jsf/composite/terminal/1_0/components">
+	
+	<ui:define name="title">
+		<h:outputText value="Gerencial->Cadastro Locadora" />
+	</ui:define>
+	
+
+	<ui:define name="principal">
+	
+	
+    <h1><p:outputLabel value="Cadastro Locadora"/></h1>
+    
+ 	<h:form id="formFornecedores">
+		<p:panelGrid columns="2">
+			<p:outputLabel value="Nome:" />
+			<p:inputText  value="#{locadoraMB.locadora.nome}"/>
+			
+			<p:outputLabel value="Endereco:" />
+			<p:inputText  value="#{locadoraMB.locadora.endereco}"/>
+			
+			<p:outputLabel value="Telefone:" />
+			<p:inputText  value="#{locadoraMB.locadora.telefone}"/>
+		</p:panelGrid>
+		<p:commandButton value="Salvar" update=":formFornecedores, :formTableFornecedores"  action="#{locadoraMB.salvar}"/>
+	</h:form>
+
+    
+    <h3><p:outputLabel value="Locadoras Cadastradas"/></h3>
+	<h:form id="formTableFornecedores">
+	
+	    <p:growl id="growl" showDetail="true" />
+	
+		<p:dataTable value="#{locadoraMB.locadoras}" var="f"
+			editable="true" id="tableProdutos"
+			selectionMode="single" selection="#{locadoraMB.locadoraSelecionada}"  rowKey="#{f.codigo}"
+			paginator="true"
+            rows="5"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15"
+                
+            emptyMessage="#{msg['pages.cadastroAluno.filterMSG']}"
+			>
+
+		   <p:ajax event="rowSelect"   update=":formTableProdutos" />
+           <p:ajax event="rowUnselect" update=":formTableProdutos" />
+           <p:ajax event="rowEdit"     listener="#{locadoraMB.onRowEdit}"     update=":formTableProdutos" /> 
+
+			<p:column headerText="Código" filterBy="#{f.codigo}">
+				<h:outputText value="#{f.codigo}" />
+			</p:column>
+
+			<p:column headerText="Nome" filterBy="#{f.nome}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="modelInput" value="#{f.nome}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Endereco" filterBy="#{f.endereco}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.endereco}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="modelInput2" value="#{f.endereco}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Telefone" filterBy="#{f.telefone}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.telefone}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="modelInput3" value="#{f.telefone}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:70px" headerText="#{msg['pages.commus.form.opcoes']}">
+					<p:rowEditor />
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{locadoraMB.remove(f)}"
+						update=":formTableFornecedores" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+    <br/>
+    <h:form id="formTableProdutos">
+	    <h3><p:outputLabel value="Carros da Locadora: #{locadoraMB.locadoraSelecionada.nome}" /></h3>
+		<p:dataTable value="#{locadoraMB.carrosLocadora}" var="prod"	id="tableProdutos">
+
+			<p:column headerText="Codigo">
+				<h:outputText value="#{prod.codigo}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+						<p:outputLabel value="#{prod.nome}" />
+			</p:column>
+			
+			<p:column headerText="Marca">
+						<p:outputLabel value="#{prod.marca}" />
+			</p:column>
+
+			<p:column headerText="Valor">
+				<h:outputText value="#{prod.valor}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+	</ui:define>
+</ui:composition>

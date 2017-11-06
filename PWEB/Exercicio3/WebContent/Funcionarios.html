@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Exercício 3 - Funcionários</title>
+
+<script src="js/ValidacaoNome.js"></script>
+<script src="js/ValidacaoEndereco.js"></script>
+<script src="js/ValidacaoEmail.js"></script>
+<script src="js/ValidacaoCPF.js"></script>
+<link rel="stylesheet" href="css/Meucss.css">
+
+</head>
+<body>
+	<form name="Funcionarios">
+		<h1>FUNCIONÁRIOS</h1><br>
+		
+		<a href="Menu.html"><label>Menu</label></a><br>
+		
+		<p><strong>Exercício 3 - PWEB</strong></p><br>
+		
+		<label>Nome completo:</label><br>
+		<input type="text" name="NomeFunc" onblur="ValidacaoNome(Funcionarios.NomeFunc)" maxlength="60" size='65'>
+		<div id="msgnome"></div><br>
+		
+		<label>Sexo:</label><br>
+		<input type="radio" name="genero" value="Masculino" checked>
+		<label>Masculino</label><br>
+  		<input type="radio" name="genero" value="Feminino">
+  		<label>Feminino</label><br><br>
+  		
+  		<label>CPF:</label><br>
+		<input type="text" name="Cpf" onblur="ValidacaoCPF(Funcionarios.Cpf)">
+		<div id="msgcpf"></div><br>
+		
+		<label>E-mail:</label><br>
+		<input type="text" name="Email" onblur="ValidacaoEmail(Funcionarios.Email)" maxlength="60" size='65'>
+		<div id="msgemail"></div><br>
+		
+		<label>Endereço:</label><br>
+		<input type="text" name="Endereco" onblur="ValidacaoEndereco(Funcionarios.Endereco)" maxlength="60" size='65'>
+		<div id="msgendereco"></div><br>
+		
+		<input type="submit" value="Enviar">
+	</form>
+</body>
+</html>

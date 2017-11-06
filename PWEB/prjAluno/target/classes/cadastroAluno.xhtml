@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+	
+	<h1>Cadastro de Alunos</h1>
+	<h:form id="formAluno">
+		<p:panelGrid columns="2">
+			<p:outputLabel value="RA: "/>
+			<p:inputText size="50" value="#{alunoMB.aluno.ra}"/>
+			
+			<p:outputLabel value="Nome: "/>
+			<p:inputText size="50" value="#{alunoMB.aluno.nome}"/>
+			
+			<p:outputLabel value="Idade: "/>
+			<p:inputText size="50" value="#{alunoMB.aluno.idade}"/>
+			
+			<p:outputLabel value="Endereço: "/>
+			<p:inputText size="50" value="#{alunoMB.aluno.endereco}"/>
+		</p:panelGrid>
+		<br></br>
+		<p:commandButton value="Salvar" action="#{alunoMB.salvar()}" update=":formAluno, :tabAluno"/>
+	</h:form>
+	<br></br>
+	
+	<p:dataTable var="alu" value="#{alunoMB.listaAlu}" id="tabAluno">
+	    <p:column headerText="RA">
+	        <p:outputLabel value="#{alu.ra}" />
+	    </p:column>
+	 
+	    <p:column headerText="Nome">
+	        <p:outputLabel value="#{alu.nome}" />
+	    </p:column>
+	 
+	    <p:column headerText="Idade">
+	        <p:outputLabel value="#{alu.idade}" />
+	    </p:column>
+	 
+	    <p:column headerText="Endereço">
+	        <p:outputLabel value="#{alu.endereco}" />
+	    </p:column>
+	</p:dataTable>
+	
+</h:body>
+</html>
